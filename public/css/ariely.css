@@ -1,0 +1,148 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+#container {
+    margin: 0 auto;
+    width: 80%;
+    height: 100%;
+    background-color: lightgray;
+}
+
+#headline {
+    margin: 0;
+    padding-left: 2%;
+    height: 5%;
+    overflow: hidden;
+}
+
+.door-container {
+    float: left;
+    width: 30%;
+    height: 35%;
+}
+
+#door-red-container {
+    margin: 0 1% 0 2%;
+    background-color: #B22D00;
+}
+
+#door-green-container {
+    margin: 0 1% 0 2%;
+    background-color: #59B200;
+}
+
+#door-blue-container {
+    margin: 0 2% 0 2%;
+    background-color: #4D4DFF;
+}
+
+#door-red {
+}
+
+#door-green {
+}
+
+#door-blue {
+}
+
+.door {
+    display: block;
+    margin: 15% auto;
+    width: 70%;
+    height: 70%;
+    border: 1px solid black;
+    transition: width;
+    background-size: auto 80%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    transition: background-size 0.1s;
+}
+
+.door:HOVER {
+    background-size: auto 90%;
+}
+
+.door-red-closed {
+    background-image: url("../img/door_red_closed.png");
+}
+
+.door-red-open {
+    background-image: url("../img/door_red_open.png");
+}
+
+.door-red-entered {
+    background-image: url("../img/door_red_open.png");
+}
+
+.door-red-locked {
+    background-image: url("../img/door_red_locked.png");
+}
+
+.door-green-closed {
+    background-image: url("../img/door_green_closed.png");
+}
+
+.door-green-open {
+    background-image: url("../img/door_green_open.png");
+}
+
+.door-green-entered {
+    background-image: url("../img/door_green_open.png");
+}
+
+.door-green-locked {
+    background-image: url("../img/door_green_locked.png");
+}
+
+.door-blue-closed {
+    background-image: url("../img/door_blue_closed.png");
+}
+
+.door-blue-open {
+    background-image: url("../img/door_blue_open.png");
+}
+
+.door-blue-entered {
+    background-image: url("../img/door_blue_open.png");
+}
+
+.door-blue-locked {
+    background-image: url("../img/door_blue_locked.png");
+}
+
+#room-container {
+    clear: both;
+    margin: 0 2%;
+    width: 96%;
+    height: 60%;
+}
+
+#room-green {
+    background-color: #59B200;
+}
+
+#room-red {
+    background-color: #B22D00;
+}
+
+#room-blue {
+    background-color: #4D4DFF;
+}
+
+.room {
+    width: 100%;
+    height: 100%;
+    background-color: #59B200;
+    border: 0;
+}
+
+.room-active {
+    display: block;
+}
+
+.room-inactive {
+    display: none;
+}
+

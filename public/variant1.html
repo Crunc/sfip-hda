@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Dan Ariely's Backdoor Experiment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/ariely.css">
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+
+<div id="container">
+    <h1 id="headline">Cash:&#160;<span id="cash">21</span>&#160;Clicks:&#160;<span id="clicks">42</span></h1>
+    <div id="door-green-container" class="door-container">
+        <button id="door-green" class="door door-green-closed" type="button"></button>
+    </div>
+    <div id="door-red-container" class="door-container">
+        <button id="door-red" class="door door-red-closed" type="button"></button>
+    </div>
+    <div id="door-blue-container" class="door-container">
+        <button id="door-blue" class="door door-blue-closed" type="button"></button>
+    </div>
+    <div id="room-container">
+        <button id="room-green" class="room room-inactive" type="button"></button>
+        <button id="room-red" class="room room-inactive" type="button"></button>
+        <button id="room-blue" class="room room-inactive" type="button"></button>
+    </div>
+</div>
+
+<div id="statistics"></div>
+
+<script type="text/javascript" src="js/vendor/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="js/plugins.js"></script>
+<script type="text/javascript" src="js/room.js"></script>
+<script type="text/javascript" src="js/door.js"></script>
+<script type="text/javascript" src="js/experiment.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
