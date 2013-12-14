@@ -1,5 +1,5 @@
 var ExperimentEvent = {
-  FINISHED: "Experiment.Finished"
+    FINISHED: "Experiment.Finished"
 };
 
 function Experiment(options) {
@@ -19,8 +19,13 @@ function Experiment(options) {
     this.options = $.extend({
         cash: 0,
         clicks: 10,
+        name: 'unnamed',
+        variant: 'unknown',
         context: document
     }, options);
+
+    this.clicked = 0;
+    this.stats = [];
 
     /**
      * The enclosing context (aka the full 'experiment'). It is used as a shared event bus for communicating with other
@@ -46,18 +51,24 @@ function Experiment(options) {
 
     /**
      *
-     * @param {number} clicks
+     * @param {boolean} roomChanged
      */
-    this.handleClicks = function(clicks) {
-        self.options.clicks -= clicks;
+    this.handleClick = function (roomChanged) {
+        if (self.clicked < self.options.clicks) {
+            self.clicked += 1;
 
-        if (self.options.clicks < 0) {
-            // the experiment is over
-            self.$context.trigger(ExperimentEvent.FINISHED, self);
-            self.$clicks.text("0");
-        }
-        else {
-            self.$clicks.text(self.options.clicks);
+            self.stats.push({
+                roomChanged: !!roomChanged
+            });
+
+            if (self.clicked >= self.options.clicks) {
+                // the experiment is over
+                self.$context.trigger(ExperimentEvent.FINISHED, self);
+                self.$clicks.text("0");
+            }
+            else {
+                self.$clicks.text(self.options.clicks - self.clicked);
+            }
         }
     };
 
@@ -71,7 +82,7 @@ function Experiment(options) {
      */
     this.onDoorClicked = function (event, door) {
         if (door.options.state !== DoorState.ENTERED) {
-            self.handleClicks(1);
+            self.handleClick(true);
         }
     };
 
@@ -84,7 +95,7 @@ function Experiment(options) {
      *          The door that has been opened.
      */
     this.onRoomClicked = function (event, door) {
-        self.handleClicks(1);
+        self.handleClick(false);
     };
 
     /**
@@ -104,7 +115,52 @@ function Experiment(options) {
         $cash.text(cash.toFixed(2));
     };
 
+    /**
+     *
+     * @param event
+     */
+    this.onExperimentFinished = function (event) {
+        var blockSize = self.options.clicks / 10;
+        var series = [];
+        for (var i = 0; i < 10; ++i) {
+            var changeCount = 0;
+            for (var k = 0; k < blockSize; ++k) {
+                var idx = (i * blockSize) + k;
+
+                if (idx < self.stats.length && self.stats[idx].roomChanged) {
+                    changeCount += 1;
+                }
+            }
+
+            series.push(changeCount);
+        }
+
+        var data = {
+            experiment: self.options.name,
+            variant: self.options.variant,
+            data: series
+        };
+
+        var jqxhr = $.ajax({
+            type: "POST",
+            url: '/statistics',
+            data: JSON.stringify(data),
+            contentType: 'application/json'
+        });
+
+        jqxhr.done(function () {
+            console.log("success");
+        });
+        jqxhr.fail(function () {
+            console.log("error");
+        });
+        jqxhr.always(function () {
+            console.log("complete");
+        });
+    };
+
     this.$context.on(DoorEvent.CLICKED, self.onDoorClicked);
     this.$context.on(RoomEvent.CLICKED, self.onRoomClicked);
     this.$context.on(RoomEvent.CASH_EARNED, self.onCashEarned);
+    this.$context.on(ExperimentEvent.FINISHED, self.onExperimentFinished);
 }

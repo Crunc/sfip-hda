@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{{ title }}</title>
+</head>
+<body>
+<h1>{{ title }}</h1>
+<ul>
+    {% for experiment in experiments %}
+    <li class="experiment{% if loop.first %} first{% endif %}">
+        <a href="{{ experiment.url }}">{{ experiment.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

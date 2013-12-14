@@ -1,8 +1,12 @@
 
-/*
- * GET users listing.
- */
+exports.list = function (req, res) {
+    var data = {
+        title: 'Experiment overview',
+        experiments: [
+            { name: 'Variante 1', url: 'variant1.html' },
+            { name: 'Variante 2', url: 'variant2.html' }
+        ]
+    };
 
-exports.list = function(req, res){
-  res.send("respond with a resource");
+    res.render('experiment-list', data);
 };

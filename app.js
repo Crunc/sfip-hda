@@ -4,18 +4,20 @@
  */
 
 var express = require('express');
-var routes = require('./routes');
-var experiment = require('./routes/experiment');
+var consolidate = require('consolidate');
 var http = require('http');
 var path = require('path');
 
 var app = express();
 
 // all environments
-app.set('ipaddress', process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1');
+app.set('ipaddress', process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0');
 app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 8080);
+
+app.engine('html', consolidate.swig); // assign the swig engine to .html files
+app.set('view engine', 'html'); // set .html as the default extension
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
@@ -29,8 +31,8 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.get('/experiments', experiment.list);
+// setup routes
+require('./router')(app);
 
 var terminator = function(sig){
     if (typeof sig === "string") {

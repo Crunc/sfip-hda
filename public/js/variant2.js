@@ -1,5 +1,6 @@
 var experiment = new Experiment({
-
+    name: 'experiment1',
+    variant: 'variant2'
 });
 
 var room_green = new Room({
