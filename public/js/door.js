@@ -10,12 +10,7 @@ var DoorEvent = {
     /**
      * Indicates that a door has been opened.
      */
-    OPENED: "Door.Opened",
-
-    /**
-     * Indicates that a door has been entered.
-     */
-    ENTERED: "Door.Entered"
+    OPENED: "Door.Opened"
 };
 
 /**
@@ -23,20 +18,11 @@ var DoorEvent = {
  */
 var DoorState = {
     /**
-     * Indicates that the door is open. A door remains open until the user enters the room corresponding to the door or
-     * decides to click another door.
+     * Indicates that the door is open. A door remains open until the user decides to click another door.
      *
      * @type {string}
      */
     OPEN: "open",
-
-    /**
-     * Indicates that the door is open and the user is currently in the room that corresponds to the door. A door
-     * remains entered until the user leaves the room corresponding to the door by entering another door.
-     *
-     * @type {string}
-     */
-    ENTERED: "entered",
 
     /**
      * Indicating that the door is closed. A door remains closed until the user clicks the door or it is locked because
@@ -123,23 +109,6 @@ function Door(options) {
     };
 
     /**
-     * Event handler that is called whenever a door has been entered.
-     *
-     * @param event     The eventObject.
-     * @para door       The door that has been opened.
-     */
-    this.onDoorEntered = function (event, door) {
-        if (door === self) {
-            // this door has been entered
-            self.changeState(DoorState.ENTERED);
-        }
-        else {
-            // another door has been entered
-            self.changeState(DoorState.CLOSED);
-        }
-    };
-
-    /**
      * Called when this door's button is clicked by the user.
      */
     this.onButtonClick = function (event) {
@@ -151,7 +120,6 @@ function Door(options) {
                     self.$context.trigger(DoorEvent.OPENED, self);
                     break;
                 case DoorState.OPEN:
-                    self.$context.trigger(DoorEvent.ENTERED, self);
                     break;
                 case DoorState.LOCKED:
                     break;
@@ -203,7 +171,6 @@ function Door(options) {
     };
 
     this.$context.on(DoorEvent.OPENED, self.onDoorOpened);
-    this.$context.on(DoorEvent.ENTERED, self.onDoorEntered);
     this.$context.on(RoomEvent.CASH_EARNED, self.onCashEarned);
     this.$context.on(ExperimentEvent.FINISHED, self.onExperimentFinished);
     this.$button.click(self.onButtonClick);

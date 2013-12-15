@@ -18,12 +18,17 @@ function Experiment(options) {
      */
     this.options = $.extend({
         cash: 0,
-        clicks: 10,
+        clicks: 30,
         name: 'unnamed',
         variant: 'unknown',
         context: document
     }, options);
 
+    if (self.options.clicks % 10 !== 0) {
+        throw "options.clicks must be a multiple of 10!";
+    }
+
+    this.finished = false;
     this.clicked = 0;
     this.stats = [];
 
@@ -54,19 +59,20 @@ function Experiment(options) {
      * @param {boolean} roomChanged
      */
     this.handleClick = function (roomChanged) {
-        if (self.clicked < self.options.clicks) {
-            self.clicked += 1;
-
-            self.stats.push({
-                roomChanged: !!roomChanged
-            });
-
+        if (self.finished === false) {
             if (self.clicked >= self.options.clicks) {
                 // the experiment is over
+                self.finished = true;
                 self.$context.trigger(ExperimentEvent.FINISHED, self);
                 self.$clicks.text("0");
             }
             else {
+                self.clicked += 1;
+
+                self.stats.push({
+                    roomChanged: !!roomChanged
+                });
+
                 self.$clicks.text(self.options.clicks - self.clicked);
             }
         }

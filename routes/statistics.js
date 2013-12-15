@@ -107,7 +107,8 @@ exports.addRecord = function (req, res) {
                     resTxt.push(row);
                 });
 
-                res.send(200, inspect(resTxt));
+                res.location('/statistics');
+                res.send(202, inspect(resTxt));
             }
             else {
                 res.send(400, err);

@@ -4,38 +4,41 @@ html, body {
 }
 
 #container {
-    margin: 0 auto;
-    width: 80%;
     height: 100%;
-    background-color: lightgray;
 }
 
-#headline {
-    margin: 0;
-    padding-left: 2%;
-    height: 5%;
-    overflow: hidden;
+#metadata-container {
+    height: 15%;
 }
 
-.door-container {
-    float: left;
-    width: 30%;
+#doors-container {
     height: 35%;
 }
 
+.red {
+    background-color: #c83300;
+}
+
+.green {
+    background-color: #6edb00;
+}
+
+.blue {
+    background-color: #3a3ac6;
+}
+
+.door-container {
+    padding: 0;
+    height: 100%;
+}
+
 #door-red-container {
-    margin: 0 1% 0 2%;
-    background-color: #B22D00;
 }
 
 #door-green-container {
-    margin: 0 1% 0 2%;
-    background-color: #59B200;
 }
 
 #door-blue-container {
-    margin: 0 2% 0 2%;
-    background-color: #4D4DFF;
 }
 
 #door-red {
@@ -49,19 +52,24 @@ html, body {
 
 .door {
     display: block;
-    margin: 15% auto;
-    width: 70%;
-    height: 70%;
-    border: 1px solid black;
-    transition: width;
-    background-size: auto 80%;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    border: 0;
+    background-size: auto 60%;
     background-position: center center;
     background-repeat: no-repeat;
-    transition: background-size 0.1s;
+    background-color: transparent;
 }
 
-.door:HOVER {
-    background-size: auto 90%;
+.door:hover {
+    background-size: auto 60%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.door:active {
+    border: 0;
 }
 
 .door-red-closed {
@@ -113,36 +121,36 @@ html, body {
 }
 
 #room-container {
-    clear: both;
-    margin: 0 2%;
-    width: 96%;
-    height: 60%;
+    height: 50%;
 }
 
 #room-green {
-    background-color: #59B200;
 }
 
 #room-red {
-    background-color: #B22D00;
 }
 
 #room-blue {
-    background-color: #4D4DFF;
 }
 
 .room {
-    width: 100%;
     height: 100%;
-    background-color: #59B200;
     border: 0;
 }
 
-.room-active {
+.room-enabled {
     display: block;
 }
 
-.room-inactive {
+.room-disabled {
     display: none;
+}
+
+.btn-pay {
+    float: none;
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+    margin-top: 2%;
 }
 

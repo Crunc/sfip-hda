@@ -5,7 +5,7 @@ var RoomEvent = {
 
 var RoomState = {
     ACTIVE: "enabled",
-    INACTIVE: "inactive"
+    INACTIVE: "disabled"
 };
 
 function Room(options) {
@@ -33,11 +33,18 @@ function Room(options) {
     }, options);
 
     /**
+     * The jQuery element representing this room.
+     *
+     * @type {jQuery}
+     */
+    this.$room = $("#room-{0}".format(self.options.color));
+
+    /**
      * The jQuery element representing this room's button element.
      *
      * @type {jQuery}
      */
-    this.$button = $("#room-{0}".format(self.options.color));
+    this.$button = self.$room.children(".btn-pay");
 
     /**
      * The jQuery element representing this room's container element.
@@ -63,21 +70,6 @@ function Room(options) {
     this.onDoorOpened = function (event, door) {
         if (door.options.color === self.options.color) {
             // the door to this room has been opened
-        }
-        else {
-            // the door to another room has been opened
-        }
-    };
-
-    /**
-     * Event handler that is called whenever a door has been entered.
-     *
-     * @param event The event object.
-     * @param door The Door that has been opened.
-     */
-    this.onDoorEntered = function (event, door) {
-        if (door.options.color === self.options.color) {
-            // the door to this room has been opened
             self.changeState(RoomState.ACTIVE);
         }
         else {
@@ -96,7 +88,7 @@ function Room(options) {
 
         if (self.options.enabled) {
             var max = self.options.maxPay;
-            var min = self.options.minPay
+            var min = self.options.minPay;
             var amount = Math.random() * (max - min) + min;
 
             if (self.options.amount < amount) {
@@ -128,13 +120,12 @@ function Room(options) {
      * @param newState The new state, must be one of RoomState.ACTIVE ("enabled") or RoomState.INACTIVE ("inactive").
      */
     this.changeState = function (newState) {
-        self.$button.removeClass("room-{0}".format(self.options.state));
-        self.$button.addClass("room-{0}".format(newState));
+        self.$room.removeClass("room-{0}".format(self.options.state));
+        self.$room.addClass("room-{0}".format(newState));
         self.options.state = newState;
     };
 
     this.$context.on(DoorEvent.OPENED, self.onDoorOpened);
-    this.$context.on(DoorEvent.ENTERED, self.onDoorEntered);
     this.$context.on(ExperimentEvent.FINISHED, self.onExperimentFinished);
     this.$button.click(self.onButtonClick);
 };
