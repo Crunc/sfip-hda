@@ -156,6 +156,53 @@ function Door(options) {
     };
 
     /**
+     * Event handler that is called when a door is clicked.
+     *
+     * @param {*} event
+     *          The event object.
+     * @param {Door} door
+     *          The door that is been clicked.
+     */
+    this.onDoorClicked = function (event, door) {
+        self.handleClick(door.options.color);
+    };
+
+    /**
+     * Event handler that is called when a door is clicked.
+     *
+     * @param {*} event
+     *          The event object.
+     * @param {Room} room
+     *          The room that is been clicked.
+     */
+    this.onRoomClicked = function (event, room) {
+        self.handleClick(room.options.color);
+    };
+
+    this.handleClick = function (color) {
+        if (self.options.lifetime > 0) {
+            if (color && color !== self.options.color) {
+                // another room has been clicked
+                self.options.lifetime -= 1;
+
+                if (self.options.lifetime > 0) {
+                    var size = Math.min(1, self.options.lifetime / 15) * 60;
+
+                    self.$button.css({
+                        "background-size": "auto {0}%".format(size)
+                    });
+                }
+                else {
+                    self.options.enabled = false;
+                    self.$button.css({
+                       "display": "none"
+                    });
+                }
+            }
+        }
+    };
+
+    /**
      * Lets this door change its state from its current state (self.options.state) to the given new state.
      *
      * @param {string} newState
@@ -171,7 +218,9 @@ function Door(options) {
     };
 
     this.$context.on(DoorEvent.OPENED, self.onDoorOpened);
+    this.$context.on(DoorEvent.CLICKED, self.onDoorClicked);
     this.$context.on(RoomEvent.CASH_EARNED, self.onCashEarned);
+    this.$context.on(RoomEvent.CLICKED, self.onRoomClicked);
     this.$context.on(ExperimentEvent.FINISHED, self.onExperimentFinished);
     this.$button.click(self.onButtonClick);
 }

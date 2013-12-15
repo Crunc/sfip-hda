@@ -17,15 +17,18 @@ var room_blue = new Room({
 
 var door_green = new Door({
     color: "green",
+    lifetime: 15,
     state: DoorState.CLOSED
 });
 
 var door_red = new Door({
     color: "red",
+    lifetime: 15,
     state: DoorState.CLOSED
 });
 
 var door_blue = new Door({
     color: "blue",
+    lifetime: 15,
     state: DoorState.CLOSED
 });

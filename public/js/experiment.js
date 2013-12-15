@@ -47,6 +47,8 @@ function Experiment(options) {
     this.$cash = $("#cash");
     self.$cash.text(self.options.cash.toFixed(2));
 
+    this.$cashChange = $("#cash-change");
+
     /**
      *
      * @type {jQuery}
@@ -114,11 +116,29 @@ function Experiment(options) {
      */
     this.onCashEarned = function (event, payData) {
         var $cash = $("#cash");
+        var $cashChange = $("#cash-change");
         var cash = parseFloat($cash.text());
 
         cash += payData.amount;
 
         $cash.text(cash.toFixed(2));
+        $cashChange.stop();
+        $cashChange.text(" {0}{1}".format(payData.amount >= 0 ? "+" : "-", payData.amount.toFixed(2)));
+        $cashChange.css({
+            "visibility": "visible",
+            "color": payData.amount >= 0 ? "green" : "red",
+            "opacity": 1
+        });
+        $cashChange.animate({
+            "opacity": 0
+        }, {
+            duration: 2500,
+            complete: function () {
+                $cashChange.css({
+                    "visibility": "hidden"
+                });
+            }
+        });
     };
 
     /**

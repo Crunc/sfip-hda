@@ -24,7 +24,7 @@ function Room(options) {
      */
     this.options = $.extend({
         color: "gray",
-        amount: 10,
+        amount: 10000,
         maxPay: 3.1,
         minPay: 0.2,
         state: RoomState.INACTIVE,

@@ -1,37 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Dan Ariely's Backdoor Experiment</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/ariely.css">
-    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="/js/vendor/modernizr-2.6.2.min.js" type="text/javascript"></script>
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="/css/bootstrap-theme.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="/css/ariely.css" rel="stylesheet" type="text/css" media="screen"/>
+    <title>Dan Ariely's Experiment | Variante 1</title>
 </head>
 <body>
 
-<div id="container">
-    <h1 id="headline">Cash:&#160;<span id="cash">21</span>&#160;Clicks:&#160;<span id="clicks">42</span></h1>
-    <div id="door-green-container" class="door-container">
-        <button id="door-green" class="door door-green-closed" type="button"></button>
+<div id="container" class="container">
+    <div id="metadata-container" class="row">
+        <div class="col-xs-6">
+            <h3>Cash:&#160;<span id="cash">21</span>&#160;&#162;&#160;<span id="cash-change">0.00</span></h3>
+        </div>
+        <div class="col-xs-6">
+            <h3>Clicks:&#160;<span id="clicks">42</span></h3>
+        </div>
     </div>
-    <div id="door-red-container" class="door-container">
-        <button id="door-red" class="door door-red-closed" type="button"></button>
+    <div id="doors-container" class="row">
+        <div id="door-green-container" class="col-xs-4 door-container green">
+            <button id="door-green" class="door door-green-closed" type="button"></button>
+        </div>
+        <div id="door-red-container" class="col-xs-4 door-container red">
+            <button id="door-red" class="door door-red-closed" type="button"></button>
+        </div>
+        <div id="door-blue-container" class="col-xs-4 door-container blue">
+            <button id="door-blue" class="door door-blue-closed" type="button"></button>
+        </div>
     </div>
-    <div id="door-blue-container" class="door-container">
-        <button id="door-blue" class="door door-blue-closed" type="button"></button>
-    </div>
-    <div id="room-container">
-        <button id="room-green" class="room room-inactive" type="button"></button>
-        <button id="room-red" class="room room-inactive" type="button"></button>
-        <button id="room-blue" class="room room-inactive" type="button"></button>
+    <div id="room-container" class="row">
+        <div id="room-green" class="col-xs-12 room room-disabled green" type="button">
+            <button class="btn btn-default btn-pay"><h1>&#162;</h1></button>
+        </div>
+        <div id="room-red" class="col-xs-12 room room-disabled red" type="button">
+            <button class="btn btn-default btn-pay"><h1>&#162;</h1></button>
+        </div>
+        <div id="room-blue" class="col-xs-12 room room-disabled blue" type="button">
+            <button class="btn btn-default btn-pay"><h1>&#162;</h1></button>
+        </div>
     </div>
 </div>
 
-<div id="statistics"></div>
-
 <script type="text/javascript" src="js/vendor/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/js/vendor/bootstrap.js"></script>
 <script type="text/javascript" src="js/plugins.js"></script>
 <script type="text/javascript" src="js/room.js"></script>
 <script type="text/javascript" src="js/door.js"></script>

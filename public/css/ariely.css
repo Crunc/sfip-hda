@@ -11,6 +11,11 @@ html, body {
     height: 15%;
 }
 
+#cash-change {
+    visibility: hidden;
+    font-weight: bold;
+}
+
 #doors-container {
     height: 35%;
 }
