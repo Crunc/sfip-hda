@@ -89,7 +89,7 @@ function Experiment(options) {
      *          The door that has been opened.
      */
     this.onDoorClicked = function (event, door) {
-        if (door.options.state !== DoorState.ENTERED) {
+        if (door.options.state !== DoorState.OPEN) {
             self.handleClick(true);
         }
     };

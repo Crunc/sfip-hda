@@ -24,9 +24,7 @@ function Room(options) {
      */
     this.options = $.extend({
         color: "gray",
-        amount: 10000,
-        maxPay: 3.1,
-        minPay: 0.2,
+        payments: null,
         state: RoomState.INACTIVE,
         enabled: true,
         context: document
@@ -61,6 +59,8 @@ function Room(options) {
      */
     this.$context = $(self.options.context);
 
+    this.payments = self.options.payments !== null ? self.options.payments.slice(0) : normally_distributed_random_numbers(200, 3, 0.64, 0, 6);
+
     /**
      * Event handler that is called whenever a door has been opened.
      *
@@ -87,16 +87,7 @@ function Room(options) {
         self.$context.trigger(RoomEvent.CLICKED, self);
 
         if (self.options.enabled) {
-            var max = self.options.maxPay;
-            var min = self.options.minPay;
-            var amount = Math.random() * (max - min) + min;
-
-            if (self.options.amount < amount) {
-                amount = self.options.amount;
-            }
-
-            self.options.amount -= amount;
-
+            var amount = self.payments.pop() || 0;
             console.log("earned {0} from {1}".format(amount, self.options.color));
             self.$context.trigger(RoomEvent.CASH_EARNED, {amount: amount, room: self});
         }

@@ -4,15 +4,18 @@ var experiment = new Experiment({
 });
 
 var room_green = new Room({
-    color: "green"
+    color: "green",
+    payments: normally_distributed_random_numbers(200, 3, 2.25, 0, 7)
 });
 
 var room_red = new Room({
-    color: "red"
+    color: "red",
+    payments: normally_distributed_random_numbers(200, 3, 0.64, 1, 5)
 });
 
 var room_blue = new Room({
-    color: "blue"
+    color: "blue",
+    payments: normally_distributed_random_numbers(200, 3, 5.2, 0, 10)
 });
 
 var door_green = new Door({

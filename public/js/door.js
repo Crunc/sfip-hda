@@ -91,10 +91,19 @@ function Door(options) {
     this.$context = $(self.options.context);
 
     /**
+     * The remaining lifetime of this door.
+     *
+     * @type {number}
+     */
+    this.lifetime = self.options.lifetime;
+
+    /**
      * Event handler that is called whenever a door has been opened.
      *
-     * @param event     The eventObject.
-     * @para door       The door that has been opened.
+     * @param {*} event
+     *          The eventObject.
+     * @para {Door} door
+     *          The door that has been opened.
      */
     this.onDoorOpened = function (event, door) {
         if (door === self) {
@@ -106,6 +115,8 @@ function Door(options) {
                 self.changeState(DoorState.CLOSED);
             }
         }
+
+        self.updateLifetimeAfterClick(door.options.color);
     };
 
     /**
@@ -136,11 +147,15 @@ function Door(options) {
      *          The data that is sent with the event. Contains the amount of cash payed and the room that payed it.
      */
     this.onCashEarned = function (event, payData) {
-        if (payData.room.options.color !== self.options.color) {
+        var room = payData.room;
+
+        if (room.options.color !== self.options.color) {
             if (self.options.state === DoorState.OPEN) {
                 self.changeState(DoorState.CLOSED);
             }
         }
+
+        self.updateLifetimeAfterClick(room.options.color);
     };
 
     /**
@@ -155,49 +170,29 @@ function Door(options) {
         self.options.enabled = false;
     };
 
-    /**
-     * Event handler that is called when a door is clicked.
-     *
-     * @param {*} event
-     *          The event object.
-     * @param {Door} door
-     *          The door that is been clicked.
-     */
-    this.onDoorClicked = function (event, door) {
-        self.handleClick(door.options.color);
-    };
+    this.updateLifetimeAfterClick = function (color) {
+        if (self.lifetime > 0) {
+            if (color === self.options.color) {
+                // this door/room has been clicked
+                self.lifetime = self.options.lifetime;
+            }
+            else {
+                // another door/room has been clicked
+                self.lifetime -= 1;
+            }
 
-    /**
-     * Event handler that is called when a door is clicked.
-     *
-     * @param {*} event
-     *          The event object.
-     * @param {Room} room
-     *          The room that is been clicked.
-     */
-    this.onRoomClicked = function (event, room) {
-        self.handleClick(room.options.color);
-    };
+            if (self.lifetime > 0) {
+                var size = Math.min(1, self.lifetime / 15) * 60;
 
-    this.handleClick = function (color) {
-        if (self.options.lifetime > 0) {
-            if (color && color !== self.options.color) {
-                // another room has been clicked
-                self.options.lifetime -= 1;
-
-                if (self.options.lifetime > 0) {
-                    var size = Math.min(1, self.options.lifetime / 15) * 60;
-
-                    self.$button.css({
-                        "background-size": "auto {0}%".format(size)
-                    });
-                }
-                else {
-                    self.options.enabled = false;
-                    self.$button.css({
-                       "display": "none"
-                    });
-                }
+                self.$button.css({
+                    "background-size": "auto {0}%".format(size)
+                });
+            }
+            else {
+                self.options.enabled = false;
+                self.$button.css({
+                    "display": "none"
+                });
             }
         }
     };
@@ -218,9 +213,7 @@ function Door(options) {
     };
 
     this.$context.on(DoorEvent.OPENED, self.onDoorOpened);
-    this.$context.on(DoorEvent.CLICKED, self.onDoorClicked);
     this.$context.on(RoomEvent.CASH_EARNED, self.onCashEarned);
-    this.$context.on(RoomEvent.CLICKED, self.onRoomClicked);
     this.$context.on(ExperimentEvent.FINISHED, self.onExperimentFinished);
     this.$button.click(self.onButtonClick);
 }
