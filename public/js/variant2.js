@@ -15,7 +15,7 @@ var room_red = new Room({
 
 var room_blue = new Room({
     color: "blue",
-    payments: normally_distributed_random_numbers(200, 3, 5.2, 0, 10)
+    payments: chi_square_distributed_random_numbers(200, -2, 10, 3)
 });
 
 var door_green = new Door({
@@ -34,4 +34,21 @@ var door_blue = new Door({
     color: "blue",
     lifetime: 15,
     state: DoorState.CLOSED
+});
+
+$(document).on(ExperimentEvent.FINISHED, function () {
+    experiment.modal("Danke für deine Teilnahme :)",
+        '<h3>Bitte halte dieses Fenster offen, bis alle fertig sind.</h3>' +
+        '<p>Du hast <strong>{0}</strong>&#160;&#162; verdient.</p>'.format(experiment.$cash.text()))
+});
+
+$(document).ready(function () {
+    var desc = '<ul>' +
+        '<li>Bitte lies die folgenden Anweisungen <strong>still</strong> für dich selbst</li>' +
+        '<li>Türen werden mit der Zeit <strong>kleiner</strong></li>' +
+        '<li>Ist eine Tür so klein dass sie nicht mehr sichtbar ist, so ist sie <strong>verloren</strong></li>' +
+        '<li>Ein Klick auf eine Tür stellt ihre ursprüngliche Größe wieder her</li>' +
+        '</ul>';
+
+   experiment.modal("Bitte genau durchlesen!", desc, "Ok, ich habe verstanden");
 });

@@ -185,6 +185,32 @@ function Experiment(options) {
         });
     };
 
+    this.modal = function (title, text, ok) {
+        $modal = $('#alertModal');
+        $title = $('.modal-title', $modal);
+        $body = $('.modal-body', $modal);
+        $button = $('.btn-ok', $modal);
+
+        $title.text(title);
+        $body.html(text);
+
+        if (ok) {
+            $button.text(ok);
+        }
+        else {
+            $button.text('');
+            $button.hide();
+//            $button.css({
+//                'visibility': 'invisible'
+//            });
+        }
+
+        $modal.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    };
+
     this.$context.on(DoorEvent.CLICKED, self.onDoorClicked);
     this.$context.on(RoomEvent.CLICKED, self.onRoomClicked);
     this.$context.on(RoomEvent.CASH_EARNED, self.onCashEarned);

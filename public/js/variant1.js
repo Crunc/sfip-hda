@@ -15,7 +15,7 @@ var room_red = new Room({
 
 var room_blue = new Room({
     color: "blue",
-    payments: normally_distributed_random_numbers(200, 3, 5.2, 0, 10)
+    payments: chi_square_distributed_random_numbers(200, -2, 10, 3)
 });
 
 var door_green = new Door({
@@ -31,4 +31,10 @@ var door_red = new Door({
 var door_blue = new Door({
     color: "blue",
     state: DoorState.CLOSED
+});
+
+$(document).on(ExperimentEvent.FINISHED, function () {
+    experiment.modal("Danke für deine Teilnahme :)",
+        '<h3>Bitte halte dieses Fenster offen, bis alle fertig sind.</h3>' +
+            '<p>Du hast <strong>{0}</strong>&#160;&#162; verdient.</p>'.format(experiment.$cash.text()))
 });
