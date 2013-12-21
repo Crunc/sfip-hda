@@ -18,7 +18,7 @@ function Experiment(options) {
      */
     this.options = $.extend({
         cash: 0,
-        clicks: 30,
+        clicks: 100,
         name: 'unnamed',
         variant: 'unknown',
         context: document
